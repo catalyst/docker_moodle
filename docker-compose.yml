@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  moodle:
+    build: ./moodle
+    ports:
+      - "80:80"
+    volumes:
+      - ./siteroot:/siteroot
+  moodle-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes: 
+      - 'moodledb:/var/lib/postgresql'
+volumes:
+    moodledb:
