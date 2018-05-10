@@ -16,5 +16,15 @@ services:
       POSTGRES_USER: moodle_user
     volumes: 
       - 'moodledb:/var/lib/postgresql'
+  moodle-test-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes: 
+      - 'moodletestdb:/var/lib/postgresql'
 volumes:
     moodledb:
+    moodletestdb:

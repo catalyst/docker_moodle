@@ -17,9 +17,25 @@ $CFG->dboptions = array (
   'dbsocket' => '',
 );
 
+$CFG->phpunit_dbtype    = 'pgsql';
+$CFG->phpunit_dblibrary = 'native';
+$CFG->phpunit_dbhost    = 'moodle-test-db';
+$CFG->phpunit_dbname    = 'moodle';
+$CFG->phpunit_dbuser    = 'moodle_user';
+$CFG->phpunit_dbpass    = 'password';
+$CFG->phpunit_prefix = 'phpu_';
+$CFG->phpunit_dataroot = '/var/lib/testsitedata';
+
 $CFG->wwwroot   = 'http://localhost';
 $CFG->dataroot  = '/var/lib/sitedata';
+
 $CFG->admin     = 'admin';
+
+//Force a debugging mode regardless the settings in the site administration
+@error_reporting(E_ALL | E_STRICT); // NOT FOR PRODUCTION SERVERS!
+$CFG->debug = (E_ALL | E_STRICT);   // === DEBUG_DEVELOPER - NOT FOR PRODUCTION SERVERS!
+
+$CFG->noemailever = true;
 
 $CFG->directorypermissions = 0777;
 
