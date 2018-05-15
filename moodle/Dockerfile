@@ -1,24 +1,21 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y \
     && apt-get install -y nginx \
-    php \
-    php-fpm \
-    php-pgsql \
-    php-xdebug \
-    php-cli \
+    php5 \
+    php5-fpm \
+    php5-pgsql \
+    php5-xdebug \
+    php5-cli \
     curl \
-    php-xml \
-    php-curl \
-    php-zip \
-    php-gd \
-    php-mbstring \
+    php5-curl \
+    php5-gd \
     php-soap \
-    php-intl \
-    php-xmlrpc \
-    php-ldap \
+    php5-intl \
+    php5-xmlrpc \
+    php5-ldap \
     locales
 
 RUN locale-gen en_AU.UTF-8
@@ -36,7 +33,6 @@ COPY nginx-site.conf /etc/nginx/sites-available/default
 RUN rm /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY 99-xdebug.ini /etc/php/7.0/mods-available/xdebug.ini
+COPY 99-xdebug.ini /etc/php5/mods-available/xdebug.ini
 
-CMD service php7.0-fpm start && nginx
-CMD service php7.0-fpm start && nginx
+CMD service php5-fpm start && nginx
