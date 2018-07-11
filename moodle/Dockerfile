@@ -1,21 +1,22 @@
-FROM ubuntu:14.04
+FROM ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update -y \
     && apt-get install -y nginx \
-    php5 \
-    php5-fpm \
-    php5-pgsql \
-    php5-xdebug \
-    php5-cli \
+    php-fpm \
+    php-pgsql \
+    php-xdebug \
     curl \
-    php5-curl \
-    php5-gd \
+    php-curl \
+    php-gd \
     php-soap \
-    php5-intl \
-    php5-xmlrpc \
-    php5-ldap \
+    php-intl \
+    php-xmlrpc \
+    php-ldap \
+    php-xml \
+    php-mbstring \
+    php-zip \
     locales
 
 RUN locale-gen en_AU.UTF-8
@@ -35,4 +36,4 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY 99-xdebug.ini /etc/php5/mods-available/xdebug.ini
 
-CMD service php5-fpm start && nginx
+CMD service php7.2-fpm start && nginx
