@@ -47,7 +47,7 @@ docker-compose up
 | 16.04  | 7.0 | Mahara        | Postgres | Apache    | Not supported (yet)          |
 | 16.04  | 7.0 | Mahara        | Mysql    | Nginx     | Not supported (yet)          |
 | 16.04  | 7.0 | Mahara        | Mysql    | Apache    | Not supported (yet)          |
-| 18.04  | 7.2 | Moodle        | Postgres | Nginx     | Not supported (yet)          |
+| 18.04  | 7.2 | Moodle        | Postgres | Nginx     | bionic-moodle-postgres-nginx |
 | 18.04  | 7.2 | Moodle        | Postgres | Apache    | Not supported (yet)          |
 | 18.04  | 7.2 | Moodle        | Mysql    | Nginx     | Not supported (yet)          |
 | 18.04  | 7.2 | Moodle        | Mysql    | Apache    | Not supported (yet)          |
