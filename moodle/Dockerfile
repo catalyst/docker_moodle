@@ -34,6 +34,6 @@ COPY nginx-site.conf /etc/nginx/sites-available/default
 RUN rm /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY 99-xdebug.ini /etc/php5/mods-available/xdebug.ini
+COPY 99-xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
 
 CMD service php7.2-fpm start && nginx
