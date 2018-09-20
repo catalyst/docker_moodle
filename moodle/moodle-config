@@ -4,7 +4,7 @@ unset($CFG);
 global $CFG;
 $CFG = new stdClass();
 
-$CFG->dbtype    = 'pgsql';
+$CFG->dbtype    = 'mysqli';
 $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'moodle-db';
 $CFG->dbname    = 'moodle';
@@ -17,7 +17,7 @@ $CFG->dboptions = array (
   'dbsocket' => '',
 );
 
-$CFG->phpunit_dbtype    = 'pgsql';
+$CFG->phpunit_dbtype    = 'mysqli';
 $CFG->phpunit_dblibrary = 'native';
 $CFG->phpunit_dbhost    = 'moodle-test-db';
 $CFG->phpunit_dbname    = 'moodle';

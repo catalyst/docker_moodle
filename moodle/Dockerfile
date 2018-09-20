@@ -6,7 +6,7 @@ RUN apt-get update -y \
     && apt-get install -y nginx \
     php5 \
     php5-fpm \
-    php5-pgsql \
+    php5-mysql \
     php5-xdebug \
     php5-cli \
     curl \
