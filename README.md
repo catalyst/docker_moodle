@@ -60,3 +60,22 @@ docker-compose up
 
 * Add Support for all environments
 * Add common utility commands
+
+## Utility Commands
+Use the following command to enter the bash shell of each container. 
+Replaces using the docker exec function. 
+
+To change container names, change name in yaml file and control file. 
+
+Enter web container:
+```
+./control web
+```
+Enter web container:
+```
+./control db
+```
+Enter test database container:
+```
+./control testdb
+```
