@@ -1,0 +1,27 @@
+#! /bin/bash
+
+## Site specific configuration - container names. Set in .yml file. 
+webcont=moodle
+dbcont=moodledb
+dbtestcont=moodletestdb
+
+for ARG in $*
+    do
+        case $ARG in
+            web)
+            docker exec -ti $webcont bash
+            exit
+            ;;
+            db)
+            docker exec -ti $dbcont bash
+            exit
+            ;;
+            testdb)
+            docker exec -ti $dbtestcont bash
+            exit
+            ;;
+            *)
+            continue
+        esac
+    done
+
