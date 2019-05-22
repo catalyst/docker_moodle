@@ -2,6 +2,7 @@ version: '3'
 
 services:
   moodle:
+    container_name: moodle
     build: ./moodle
     ports:
       - "80:80"
@@ -9,6 +10,7 @@ services:
       - ./siteroot:/siteroot
   moodle-db:
     image: mysql:5.5
+    container_name: moodledb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -20,6 +22,7 @@ services:
       - 'moodledb:/var/lib/mysql'
   moodle-test-db:
     image: mysql:5.5
+    container_name: moodletestdb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
