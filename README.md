@@ -33,7 +33,7 @@ docker-compose up
 | ------:| ---:| -------------:| --------:| ---------:| ----------------------------:|
 | 14.04  | 5.5 | Moodle        | Postgres | Nginx     | trusty-moodle-postgres-nginx |
 | 14.04  | 5.5 | Moodle        | Postgres | Apache    | Not supported (yet)          |
-| 14.04  | 5.5 | Moodle        | Mysql    | Nginx     | Not supported (yet)          |
+| 14.04  | 5.5 | Moodle        | Mysql    | Nginx     | trusty-moodle-mysql-nginx    |
 | 14.04  | 5.5 | Moodle        | Mysql    | Apache    | Not supported (yet)          |
 | 14.04  | 5.5 | Mahara        | Postgres | Nginx     | Not supported (yet)          |
 | 14.04  | 5.5 | Mahara        | Postgres | Apache    | Not supported (yet)          |
@@ -41,7 +41,7 @@ docker-compose up
 | 14.04  | 5.5 | Mahara        | Mysql    | Apache    | Not supported (yet)          |
 | 16.04  | 7.0 | Moodle        | Postgres | Nginx     | xenial-moodle-postgres-nginx |
 | 16.04  | 7.0 | Moodle        | Postgres | Apache    | Not supported (yet)          |
-| 16.04  | 7.0 | Moodle        | Mysql    | Nginx     | Not supported (yet)          |
+| 16.04  | 7.0 | Moodle        | Mysql    | Nginx     | xenial-moodle-mysql-nginx    |
 | 16.04  | 7.0 | Moodle        | Mysql    | Apache    | Not supported (yet)          |
 | 16.04  | 7.0 | Mahara        | Postgres | Nginx     | xenial-mahara-postgres-nginx |
 | 16.04  | 7.0 | Mahara        | Postgres | Apache    | Not supported (yet)          |
