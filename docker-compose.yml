@@ -2,12 +2,14 @@ version: '3'
 
 services:
   moodle:
+    container_name: moodle
     build: ./moodle
     ports:
       - "80:80"
     volumes:
       - ./siteroot:/siteroot
   moodle-db:
+    container_name: moodledb
     image: postgres
     restart: always
     environment:
@@ -17,6 +19,7 @@ services:
     volumes: 
       - 'moodledb:/var/lib/postgresql'
   moodle-test-db:
+    container_name: moodletestdb
     image: postgres
     restart: always
     environment:
