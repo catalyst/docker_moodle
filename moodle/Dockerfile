@@ -34,5 +34,6 @@ RUN rm /etc/nginx/nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY 99-xdebug.ini /etc/php5/mods-available/xdebug.ini
+COPY php.ini /etc/php5/fpm/php.ini
 
 CMD service php5-fpm start && nginx
