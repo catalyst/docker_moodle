@@ -71,7 +71,7 @@ Enter web container:
 ```
 ./control web
 ```
-Enter web container:
+Enter db container:
 ```
 ./control db
 ```
