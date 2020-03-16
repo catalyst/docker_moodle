@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  moodle:
+    build: ./docker/moodle
+    ports:
+      - "80:80"
+    volumes:
+      - ./siteroot:/siteroot
+  db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes:
+      - 'db:/var/lib/postgresql'
+  test-db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes:
+      - 'testdb:/var/lib/postgresql'
+volumes:
+    db:
+    testdb:
