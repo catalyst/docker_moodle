@@ -32,10 +32,12 @@ $CFG->dataroot  = '/var/lib/sitedata';
 
 $CFG->admin     = 'admin';
 
-//Force a debugging mode regardless the settings in the site administration
+// Force a debugging mode regardless the settings in the site administration
 @error_reporting(E_ALL | E_STRICT); // NOT FOR PRODUCTION SERVERS!
 $CFG->debug = (E_ALL | E_STRICT);   // === DEBUG_DEVELOPER - NOT FOR PRODUCTION SERVERS!
 
+// Uncomment this line to enable mailcatcher (and comment out $CFG->noemailever = true;)
+// $CFG->smtphosts = "mailcatcher:25";
 $CFG->noemailever = true;
 
 $CFG->directorypermissions = 0777;

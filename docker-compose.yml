@@ -25,6 +25,10 @@ services:
       POSTGRES_USER: moodle_user
     volumes:
       - 'testdb:/var/lib/postgresql'
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "127.0.0.1:1080:1080"
 volumes:
     db:
     testdb:

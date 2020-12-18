@@ -26,11 +26,37 @@ git clone git@github.com:moodle/moodle.git siteroot
 cp moodle-config siteroot/config.php
 ```
 
-4. Start containers
+4. (Optional) Edit config.php to enable mailcatcher
+
+```
+vim siteroot/config.php
+```
+
+Uncomment the following line
+```
+// $CFG->smtphosts = "mailcatcher:25";
+```
+And comment out the line:
+```
+$CFG->noemailever = true;
+```
+
+5. Start containers
 
 ```
 docker-compose up
 ```
+
+## Access the Environment
+
+To access the environment, browse to:
+
+http://localhost
+
+To access the mailcatcher web UI, browse to:
+
+http://localhost:1080
+
 
 ## Utility Commands
 
