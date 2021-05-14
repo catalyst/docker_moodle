@@ -57,6 +57,12 @@ Enter test database container:
 ./control testdb
 ```
 
+Restore db locally:
+
+```
+./control dbrestore <filename.gz>
+```
+
 ## Running Tests
 
 To setup the testing environment run:

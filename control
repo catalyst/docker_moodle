@@ -20,6 +20,11 @@ case "$1" in
         docker exec -ti $dbtestcont bash
         ;;
 
+    dbrestore)
+        dbcont="$(docker-compose ps -q db)"
+        gunzip < $2 | docker exec -i $dbcont psql -U moodle_user postgres
+        ;;
+
     *)
         echo Invalid command "$1"
         exit 1
