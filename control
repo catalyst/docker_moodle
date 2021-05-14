@@ -20,6 +20,11 @@ case "$1" in
         docker exec -ti $dbtestcont bash
         ;;
 
+    dbrestore)
+        dbcont="$(docker-compose ps -q db)"
+        gunzip < $2 | sed -r '/INSERT INTO `(mdl_logstore_standard_log|mdl_analytics|mdl_log).*`/d' | docker exec -i $dbcont mysql -uroot -ppassword
+        ;;
+
     *)
         echo Invalid command "$1"
         exit 1
