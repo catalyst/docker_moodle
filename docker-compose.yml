@@ -9,7 +9,6 @@ services:
       - ./siteroot:/siteroot
   db:
     image: mysql:5.7
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: moodle
@@ -20,7 +19,6 @@ services:
       - 'db:/var/lib/mysql'
   test-db:
     image: mysql:5.7
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: moodle
