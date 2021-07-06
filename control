@@ -2,7 +2,7 @@
 
 ## Change to directory of where this script is located
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd $DIR;
+cd "$DIR" || exit;
 
 case "$1" in
     web)
@@ -12,12 +12,12 @@ case "$1" in
 
     db)
         dbcont="$(docker-compose ps -q db)"
-        docker exec -ti $dbcont bash
+        docker exec -ti $dbcont psql -U moodle_user moodle
         ;;
 
     testdb)
         dbtestcont="$(docker-compose ps -q test-db)"
-        docker exec -ti $dbtestcont bash
+        docker exec -ti $dbtestcont psql -U moodle_user moodle
         ;;
 
     dbrestore)

@@ -8,7 +8,7 @@ services:
     volumes:
       - ./siteroot:/siteroot
   db:
-    image: postgres:9.6
+    image: postgres:10.15
     restart: always
     environment:
       POSTGRES_PASSWORD: password
@@ -17,7 +17,7 @@ services:
     volumes:
       - 'db:/var/lib/postgresql'
   test-db:
-    image: postgres:9.6
+    image: postgres:10.15
     restart: always
     environment:
       POSTGRES_PASSWORD: password
