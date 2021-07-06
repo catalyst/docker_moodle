@@ -5,9 +5,11 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
     && apt-get install -y \
     curl \
+    graphviz \
     locales \
     nginx \
     php-soap \
+    php-tideways \
     php5 \
     php5-cli \
     php5-curl \
