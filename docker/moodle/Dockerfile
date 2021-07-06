@@ -5,6 +5,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y \
     && apt-get install -y \
     curl \
+    graphviz \
     locales \
     nginx \
     php \
@@ -19,6 +20,7 @@ RUN apt-get update -y \
     php-mysql \
     php-pgsql \
     php-soap \
+    php-tideways \
     php-xdebug \
     php-xml \
     php-xmlrpc \
