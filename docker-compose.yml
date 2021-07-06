@@ -9,7 +9,6 @@ services:
       - ./siteroot:/siteroot
   db:
     image: postgres:10.15
-    restart: always
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: moodle
@@ -18,7 +17,6 @@ services:
       - 'db:/var/lib/postgresql'
   test-db:
     image: postgres:10.15
-    restart: always
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: moodle
