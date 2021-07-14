@@ -1,0 +1,50 @@
+server {
+    listen 0.0.0.0:%%DOCKER_PORT%% default_server;
+
+    root /siteroot;
+    
+    index index.php index.html index.htm;
+
+    server_name %%WWWROOT_HOSTNAME%%;
+    return 302 https://$server_name:%%DOCKER_PORT_SSL%%$request_uri;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ [^/]\.php(/|$){
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_index   index.php;
+        include         fastcgi_params;
+        fastcgi_param   PATH_INFO       $fastcgi_path_info;
+        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass    unix:/var/run/php/php7.4-fpm.sock;
+    }
+}
+server {
+
+    # SSL configuration
+
+    listen 0.0.0.0:%%DOCKER_PORT_SSL%% ssl http2 default_server;
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+
+    root /siteroot;
+    
+    index index.php index.html index.htm;
+
+    server_name %%WWWROOT_HOSTNAME%%;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ [^/]\.php(/|$){
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_index   index.php;
+        include         fastcgi_params;
+        fastcgi_param   PATH_INFO       $fastcgi_path_info;
+        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass    unix:/var/run/php/php7.4-fpm.sock;
+    }
+}

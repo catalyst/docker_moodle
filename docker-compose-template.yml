@@ -1,0 +1,33 @@
+version: '3.2'
+
+services:
+  moodle:
+    build: ./docker/moodle
+    ports:
+      - "127.0.0.1:%%DOCKER_PORT%%:%%DOCKER_PORT%%"
+      - "127.0.0.1:%%DOCKER_PORT_SSL%%:%%DOCKER_PORT_SSL%%"
+    volumes:
+      - ./siteroot:/siteroot
+  db:
+    image: postgres:10.15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes:
+      - 'db:/var/lib/postgresql'
+  test-db:
+    image: postgres:10.15
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moodle
+      POSTGRES_USER: moodle_user
+    volumes:
+      - 'testdb:/var/lib/postgresql'
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "127.0.0.1:%%DOCKER_PORT_MAILCATCHER%%:%%DOCKER_PORT_MAILCATCHER%%"
+volumes:
+    db:
+    testdb:
