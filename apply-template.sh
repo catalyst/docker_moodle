@@ -45,7 +45,7 @@ sed -i '/^ENTRYPOINT .*/i COPY nginx-selfsigned.key /etc/ssl/private/nginx-selfs
 
 # Generate private key and cert with WWWROOT_HOSTNAME
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./docker/moodle/nginx-selfsigned.key -out ./docker/moodle/nginx-selfsigned.crt \
-    -subj "/CN=$WWWROOT_HOSTNAME\/emailAddress=admin@$WWWROOT_HOSTNAME/C=AU/ST=/L=/O=Catalyst IT Locla Docker/OU=" 
+    -subj "/CN=$WWWROOT_HOSTNAME\/emailAddress=admin@$WWWROOT_HOSTNAME/C=AU/ST=/L=/O=Catalyst IT/OU=" 
 
 # Generate strong Diffie-Hellman group
 openssl dhparam -out ./docker/moodle/dhparam.pem 2048
