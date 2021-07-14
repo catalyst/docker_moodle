@@ -12,6 +12,10 @@
 ```
 git clone git@github.com:catalyst/docker_moodle.git docker_moodle
 ```
+Or, if using the script below to run multiple containers, like so, for each:
+```
+git clone git@github.com:catalyst/docker_moodle.git docker_moodle_01
+```
 
 2. Clone Moodle code into siteroot
 
@@ -98,9 +102,11 @@ docker-compose up
 
 6. Access container in browser
 
-https://docker-01-44381.local (will redirect to https://docker-01-44381.local:44381). 
+http://docker-01-44381.local:81 (will redirect to https://docker-01-44381.local:44381)
+Or:
+https://docker-01-44381.local:44381 (Your browser should warn about the self-signed certificate). 
 
-After typing it in once, now you can use your browser's autocomplete awesome bar by typing "docker-01-" ... or "docker-02-" ... and you don't need to remember custom port numbers.
+After typing it in once, now you can use your browser's autocomplete/awesome bar by typing "docker-01-" ... or "docker-02-" ... and you don't need to remember custom port numbers.
 
 
 ## Utility Commands
