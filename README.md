@@ -17,6 +17,11 @@ git clone git@github.com:catalyst/docker_moodle.git ~/projects/docker_moodle
 2. Set environment variable PROJECTS_DIR to where all your moodle projects are stored (including just cloned docker_moodle)
 
 ```
+sudo bash -c 'echo "PROJECTS_DIR=/home/dmitriim/projects" >> /etc/environment'
+
+```
+
+```
  echo "export PROJECTS_DIR=/home/dmitriim/projects" >> ~/.bashrc
  source ~/.bashrc
 ```
