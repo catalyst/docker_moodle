@@ -30,7 +30,7 @@ case "$1" in
         export COMPOSE_PROJECT_NAME=$2
         export MOODLE_WWWROOT=$projecsdir/$2
         export MOODLE_NAME=$2
-        siteport="$(cat $MOODLE_WWWROOT/~siteport)"
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
         export MOODLE_PORT=$siteport
 
         cd $projecsdir/docker_moodle
@@ -42,7 +42,7 @@ case "$1" in
         export COMPOSE_PROJECT_NAME=$2
         export MOODLE_WWWROOT=$projecsdir/$2
         export MOODLE_NAME=$2
-        siteport="$(cat $MOODLE_WWWROOT/~siteport)"
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
         export MOODLE_PORT=$siteport
 
         cd $projecsdir/docker_moodle
@@ -75,8 +75,8 @@ case "$1" in
         echo $ok Created config.php "($MOODLE_WWWROOT/config.php)"
 
         # Saving the project port.
-        echo $siteport > $MOODLE_WWWROOT/~siteport
-        echo $ok Saved the project port "($MOODLE_WWWROOT/~siteport)"
+        echo $siteport > $MOODLE_WWWROOT/siteport~
+        echo $ok Saved the project port "($MOODLE_WWWROOT/siteport~)"
 
         # Creating a local nginx rule.
         if ! echo "
@@ -131,7 +131,7 @@ case "$1" in
         export MOODLE_NAME=$2
 
         sitehost=$2.docker
-        siteport="$(cat $MOODLE_WWWROOT/~siteport)"
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
 
         export MOODLE_PORT=$siteport
 
@@ -141,7 +141,7 @@ case "$1" in
         rm -rf /etc/nginx/sites-enabled/$sitehost
         echo $ok New nginx site enabled "(/etc/nginx/sites-enabled/$sitehost)"
 
-        rm $MOODLE_WWWROOT/~siteport
+        rm $MOODLE_WWWROOT/siteport~
         echo $ok New nginx site enabled "(/etc/nginx/sites-enabled/$sitehost)"
 
         service nginx restart
@@ -149,7 +149,7 @@ case "$1" in
         sed -i "/$sitehost/d" /etc/hosts
         echo $ok Deleted host name from /etc/hosts file "($sitehost)"
 
-        cd $projecsdir/docker_moodle
+        cd "$projecsdir/docker_moodle"
 
         echo $ok Removing docker components...
 
