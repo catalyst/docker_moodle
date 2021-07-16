@@ -1,7 +1,7 @@
 server {
     listen 80 default_server;
 
-    root /siteroot;
+    root /var/www/site;
 
     index index.php index.html index.htm;
 

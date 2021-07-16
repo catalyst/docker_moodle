@@ -4,32 +4,61 @@
 
 - Docker
 - Docker-compose
+- Nginx
+
+## Set up
+
+1. Clone this repository to the folder where all your moodle projects are stored (e.g ~/projects)
+
+```
+git clone git@github.com:catalyst/docker_moodle.git ~/projects/docker_moodle
+```
+
+2. Set environment variable PROJECTS_DIR to where all your moodle projects are stored (including just cloned docker_moodle)
+
+```
+ echo "export PROJECTS_DIR=/home/dmitriim/projects" >> ~/.bashrc
+ source ~/.bashrc
+```
+
+2. Symlink control file to your /usr/local/bin/control
+
+```
+sudo ln -s ~/project/docker_moodle/control /usr/local/bin/control
+```
 
 ## Usage
 
-1. Clone this repository
+
+1. Clone Moodle code to your  to where all your moodle projects are stored (e.g ~/projects)
 
 ```
-git clone git@github.com:catalyst/docker_moodle.git docker_moodle
+git clone git@github.com:moodle/moodle.git ~/projects/moodle
 ```
 
-2. Clone Moodle code into siteroot
+2. Create project (a name of the project should match the folder where your moodle code is located)
 
 ```
-cd docker_moodle
-git clone git@github.com:moodle/moodle.git siteroot
-```
+sudo control create moodle 
 
-3. Copy site config across
-
-```
-cp moodle-config siteroot/config.php
 ```
 
 4. Start containers
 
 ```
-docker-compose up
+ control start moodle
+```
+
+4. Stop containers
+
+```
+ control stop moodle
+```
+
+4. Delete project
+
+```
+ sudo control delete moodle
 ```
 
 ## Utility Commands
@@ -42,25 +71,25 @@ To change container names, change name in yaml file and control file.
 Enter web container:
 
 ```
-./control web
+control web moodle
 ```
 
 Enter db container:
 
 ```
-./control db
+control db moodle
 ```
 
 Enter test database container:
 
 ```
-./control testdb
+control testdb moodle
 ```
 
 Restore db locally:
 
 ```
-./control dbrestore <filename.gz>
+control dbrestore moodle <filename.gz>
 ```
 
 ## Running Tests
@@ -68,14 +97,13 @@ Restore db locally:
 To setup the testing environment run:
 
 ```
-./control web
-composer install
+control web moodle
 php admin/tool/phpunit/cli/init.php
 ```
 
 To run tests:
 
 ```
-./control web
-./vendor/bin/phpunit
+control web
+/vendor/bin/phpunit
 ```

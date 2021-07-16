@@ -40,10 +40,11 @@ COPY nginx-site /etc/nginx/sites-available/default
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY xdebug.ini /etc/php/7.4/mods-available/xdebug.ini
 COPY php.ini /etc/php/7.4/fpm/php.ini
+COPY custom-php-fpm.conf /etc/php/7.4/fpm/pool.d/custom-php-fpm.conf
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
-WORKDIR /siteroot
+WORKDIR /var/www/site
 
 ENTRYPOINT ["/entrypoint.sh"]

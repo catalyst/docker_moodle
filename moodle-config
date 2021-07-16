@@ -26,7 +26,10 @@ $CFG->phpunit_dbpass    = 'password';
 $CFG->phpunit_prefix    = 'phpu_';
 $CFG->phpunit_dataroot = '/var/lib/testsitedata';
 
-$CFG->wwwroot   = 'http://localhost';
+$name = getenv('MOODLE_NAME');
+
+$CFG->wwwroot   = "http://{$name}.docker";
+$CFG->reverseproxy = true;
 
 $CFG->dataroot  = '/var/lib/sitedata';
 
