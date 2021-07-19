@@ -25,7 +25,8 @@ RUN apt-get update -y \
     php-xml \
     php-xmlrpc \
     php-zip \
-    vim 
+    vim\
+    chromium-browser
 
 RUN locale-gen en_AU.UTF-8
 
