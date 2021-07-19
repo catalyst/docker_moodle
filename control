@@ -23,7 +23,7 @@ case "$1" in
 
     dbrestore)
         dbcont="$(docker ps -q -f name=$2_db)"
-        gunzip < $3 | docker exec -i $dbcont psql -U moodle_user postgres
+        gunzip < $3 | docker exec -i $dbcont psql -U moodle_user moodle
         ;;
 
     start)
