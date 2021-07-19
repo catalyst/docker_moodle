@@ -32,6 +32,20 @@ sudo bash -c 'echo "PROJECTS_DIR=/home/dmitriim/projects" >> /etc/environment'
 sudo ln -s ~/project/docker_moodle/control /usr/local/bin/control
 ```
 
+3. Make ure that you local nginx server got client_max_body_size set to 8000M
+
+```
+sudo vi /etc/nginx/nginx.conf
+```
+
+```
+http {
+...
+        client_max_body_size 8000M;
+...        
+
+}
+```
 ## Usage
 
 
