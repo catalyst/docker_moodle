@@ -124,5 +124,5 @@ To run tests:
 
 ```
 control web
-/vendor/bin/phpunit
+./vendor/bin/phpunit
 ```
