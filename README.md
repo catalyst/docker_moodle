@@ -4,7 +4,7 @@
 
 - Docker
 - Docker-compose
-- Nginx
+- Nginx installed locally
 
 ## Set up
 
