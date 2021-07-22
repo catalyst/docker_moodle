@@ -18,12 +18,11 @@ git clone git@github.com:catalyst/docker_moodle.git ~/projects/docker_moodle
 
 ```
 sudo bash -c 'echo "PROJECTS_DIR=/home/dmitriim/projects" >> /etc/environment'
-
 ```
 
 ```
- echo "export PROJECTS_DIR=/home/dmitriim/projects" >> ~/.bashrc
- source ~/.bashrc
+echo "export PROJECTS_DIR=/home/dmitriim/projects" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 2. Symlink control file to your /usr/local/bin/control
@@ -41,14 +40,14 @@ sudo vi /etc/nginx/nginx.conf
 ```
 http {
 ...
-        client_max_body_size 8000M;
+   client_max_body_size 8000M;
 ...        
 
 }
 ```
 
-4. Start mailhog locally (it will be used for all your instances). Note: 192.168.56.1 is your local instance IP address. MailHog will be available on http://192.168.56.1:8025
-
+4. Set up MailHog locally (it will be used for all your instances). Note: 192.168.56.1 is your local IP address,
+   and it should be available from your docker containers. 
 
 ```
 docker run --detach --name=mailhog --publish=192.168.56.1:8025:8025 --publish=192.168.56.1:1025:1025 --restart=unless-stopped mailhog/mailhog
@@ -59,9 +58,11 @@ sudo bash -c 'echo "MOODLE_MAIL_HOST=192.168.56.1" >> /etc/environment'
 ```
 
 ```
- echo "export MOODLE_MAIL_HOST=192.168.56.1" >> ~/.bashrc
- source ~/.bashrc
+echo "export MOODLE_MAIL_HOST=192.168.56.1" >> ~/.bashrc
+source ~/.bashrc
 ```
+
+MailHog UI will be available on http://192.168.56.1:8025
 
 ## Usage
 
@@ -75,7 +76,6 @@ git clone git@github.com:moodle/moodle.git ~/projects/moodle
 
 ```
 sudo control create moodle 
-
 ```
 
 4. Start containers
