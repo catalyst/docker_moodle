@@ -46,8 +46,24 @@ http {
 
 }
 ```
-## Usage
 
+4. Start mailhog locally (it will be used for all your instances). Note: 192.168.56.1 is your local instance IP address. MailHog will be available on http://192.168.56.1:8025
+
+
+```
+docker run --detach --name=mailhog --publish=192.168.56.1:8025:8025 --publish=192.168.56.1:1025:1025 --restart=unless-stopped mailhog/mailhog
+```
+
+```
+sudo bash -c 'echo "MOODLE_MAIL_HOST=192.168.56.1" >> /etc/environment'
+```
+
+```
+ echo "export MOODLE_MAIL_HOST=192.168.56.1" >> ~/.bashrc
+ source ~/.bashrc
+```
+
+## Usage
 
 1. Clone Moodle code to your  to where all your moodle projects are stored (e.g ~/projects)
 
@@ -68,13 +84,13 @@ sudo control create moodle
  control start moodle
 ```
 
-4. Stop containers
+5. Stop containers
 
 ```
  control stop moodle
 ```
 
-4. Delete project
+6. Delete project
 
 ```
  sudo control delete moodle

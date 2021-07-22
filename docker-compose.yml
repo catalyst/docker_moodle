@@ -11,6 +11,7 @@ services:
       MOODLE_NAME: "${MOODLE_NAME}"
       MOODLE_PORT: "${MOODLE_PORT}"
       MOODLE_WWWROOT: "${MOODLE_WWWROOT}"
+      MOODLE_MAIL_HOST: "${MOODLE_MAIL_HOST}"
   db:
     image: postgres:10.15
     environment:
