@@ -59,8 +59,13 @@ Enter test database container:
 
 Restore db locally:
 
+ If restoring a gzip file use:
 ```
 ./control dbrestore <filename.gz>
+```
+ If restoring a bz2 file use:
+```
+./control dbrestorebz2 <filename.bz2>
 ```
 
 ## Running Tests

@@ -25,6 +25,11 @@ case "$1" in
         gunzip < $2 | sed -r '/INSERT INTO `(mdl_logstore_standard_log|mdl_analytics|mdl_log).*`/d' | docker exec -i $dbcont mysql -uroot -ppassword
         ;;
 
+    dbrestorebz2)
+        dbcont="$(docker-compose ps -q db)"
+        bunzip2 < $2 | sed -r '/INSERT INTO `(mdl_logstore_standard_log|mdl_analytics|mdl_log).*`/d' | docker exec -i $dbcont mysql -uroot -ppassword
+        ;;
+
     *)
         echo Invalid command "$1"
         exit 1
