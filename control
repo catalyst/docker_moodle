@@ -12,22 +12,19 @@ case "$1" in
 
     db)
         dbcont="$(docker-compose ps -q db)"
-        docker exec -ti $dbcont mysql -u root --password=password
-        ;;
+        docker exec -ti $dbcont /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Mysecretpassw0rd
+        ;;        
 
     testdb)
         dbtestcont="$(docker-compose ps -q test-db)"
-        docker exec -ti $dbtestcont mysql -u root --password=password
+        docker exec -ti $dbtestcont /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Mysecretpassw0rd
         ;;
 
-    dbrestore)
+    createdb)
         dbcont="$(docker-compose ps -q db)"
-        gunzip < $2 | sed -r '/INSERT INTO `(mdl_logstore_standard_log|mdl_analytics|mdl_log).*`/d' | docker exec -i $dbcont mysql -uroot -ppassword
-        ;;
-
-    dbrestorebz2)
-        dbcont="$(docker-compose ps -q db)"
-        bunzip2 < $2 | sed -r '/INSERT INTO `(mdl_logstore_standard_log|mdl_analytics|mdl_log).*`/d' | docker exec -i $dbcont mysql -uroot -ppassword
+        docker exec -ti $dbcont /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Mysecretpassw0rd -i /db/createdb.sql
+        dbcont="$(docker-compose ps -q test-db)"
+        docker exec -ti $dbcont /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Mysecretpassw0rd -i /db/createdb.sql
         ;;
 
     *)

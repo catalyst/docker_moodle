@@ -8,25 +8,23 @@ services:
     volumes:
       - ./siteroot:/siteroot
   db:
-    image: mysql:5.7
+    image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: moodle
-      MYSQL_USER: moodle_user
-      MYSQL_PASSWORD: password
-    command: mysqld --innodb-file-format=Barracuda --innodb_file_per_table=1 --innodb_large_prefix=1 --max_allowed_packet=32M --innodb_log_file_size=512M --explicit_defaults_for_timestamp=1
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Mysecretpassw0rd
+      MSSQL_DATA_DIR: /var/lib/mssql
     volumes:
-      - 'db:/var/lib/mysql'
+      - 'db:/var/lib/mssql'
+      - './db:/db'
   test-db:
-    image: mysql:5.7
+    image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: moodle
-      MYSQL_USER: moodle_user
-      MYSQL_PASSWORD: password
-    command: mysqld --innodb-file-format=Barracuda --innodb_file_per_table=1 --innodb_large_prefix=1 --max_allowed_packet=32M --innodb_log_file_size=512M --explicit_defaults_for_timestamp=1
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Mysecretpassw0rd
+      MSSQL_DATA_DIR: /var/lib/mssql
     volumes:
-      - 'testdb:/var/lib/mysql'
+      - 'testdb:/var/lib/mssql'
+      - './db:/db'
 volumes:
     db:
     testdb:

@@ -4,12 +4,12 @@ unset($CFG);
 global $CFG;
 $CFG = new stdClass();
 
-$CFG->dbtype    = 'mysqli';
+$CFG->dbtype    = 'sqlsrv';
 $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'db';
 $CFG->dbname    = 'moodle';
-$CFG->dbuser    = 'moodle_user';
-$CFG->dbpass    = 'password';
+$CFG->dbuser    = 'sa';
+$CFG->dbpass    = 'Mysecretpassw0rd';
 $CFG->prefix    = 'mdl_';
 $CFG->dboptions = array (
   'dbpersist' => 0,
@@ -17,12 +17,12 @@ $CFG->dboptions = array (
   'dbsocket' => '',
 );
 
-$CFG->dbtype            = 'mysqli';
+$CFG->phpunit_dbtype    = 'sqlsrv';
 $CFG->phpunit_dblibrary = 'native';
 $CFG->phpunit_dbhost    = 'test-db';
 $CFG->phpunit_dbname    = 'moodle';
-$CFG->phpunit_dbuser    = 'moodle_user';
-$CFG->phpunit_dbpass    = 'password';
+$CFG->phpunit_dbuser    = 'sa';
+$CFG->phpunit_dbpass    = 'Mysecretpassw0rd';
 $CFG->phpunit_prefix    = 'phpu_';
 $CFG->phpunit_dataroot = '/var/lib/testsitedata';
 

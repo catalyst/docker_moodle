@@ -2,6 +2,9 @@ FROM ubuntu:20.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Replaced sh with bash.
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 RUN apt-get update -y \
     && apt-get install -y \
     curl \
@@ -17,15 +20,33 @@ RUN apt-get update -y \
     php-intl \
     php-ldap \
     php-mbstring \
-    php-mysql \
-    php-mysql \
     php-soap \
     php-tideways \
     php-xdebug \
     php-xml \
     php-xmlrpc \
     php-zip \
-    vim 
+    vim \
+    php-pear \
+    php-dev \
+    gnupg \    
+    gnupg2
+
+
+# Microsoft ODBC driver.
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update -y
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
+RUN ACCEPT_EULA=Y apt-get install -y mssql-tools
+RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc \
+    && source ~/.bashrc \
+    && apt-get install -y unixodbc-dev \
+    && pecl install sqlsrv \
+    && pecl install pdo_sqlsrv
+RUN printf "; priority=20\nextension=sqlsrv.so\n" > /etc/php/7.4/mods-available/sqlsrv.ini
+RUN printf "; priority=30\nextension=pdo_sqlsrv.so\n" > /etc/php/7.4/mods-available/pdo_sqlsrv.ini
+RUN phpenmod -v 7.4 sqlsrv pdo_sqlsrv
 
 RUN locale-gen en_AU.UTF-8
 
