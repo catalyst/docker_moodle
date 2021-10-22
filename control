@@ -26,6 +26,13 @@ case "$1" in
         gunzip < $3 | docker exec -i $dbcont psql -U moodle_user moodle
         ;;
 
+    dbbackup)
+        backupfile=$projecsdir/$2-moodle.sql.gz
+        dbcont="$(docker ps -q -f name=$2_db)"
+        docker exec -i $dbcont pg_dump  -U moodle_user moodle |  gzip > $backupfile
+        echo Backup file is avaliable here $backupfile
+        ;;
+
     start)
         export COMPOSE_PROJECT_NAME=$2
         export MOODLE_WWWROOT=$projecsdir/$2
