@@ -4,9 +4,14 @@ services:
   moodle:
     build: ./docker/moodle
     ports:
-      - "127.0.0.1:80:80"
+      - "127.0.0.1:${MOODLE_PORT}:80"
     volumes:
-      - ./siteroot:/siteroot
+      - ${MOODLE_WWWROOT}:/var/www/site
+    environment:
+      MOODLE_NAME: "${MOODLE_NAME}"
+      MOODLE_PORT: "${MOODLE_PORT}"
+      MOODLE_WWWROOT: "${MOODLE_WWWROOT}"
+      MOODLE_MAIL_HOST: "${MOODLE_MAIL_HOST}"
   db:
     image: postgres:10.15
     environment:

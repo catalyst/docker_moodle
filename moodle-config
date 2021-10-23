@@ -26,7 +26,10 @@ $CFG->phpunit_dbpass    = 'password';
 $CFG->phpunit_prefix    = 'phpu_';
 $CFG->phpunit_dataroot = '/var/lib/testsitedata';
 
-$CFG->wwwroot   = 'http://localhost';
+$name = getenv('MOODLE_NAME');
+
+$CFG->wwwroot   = "http://{$name}.docker";
+$CFG->reverseproxy = true;
 
 $CFG->dataroot  = '/var/lib/sitedata';
 
@@ -36,7 +39,12 @@ $CFG->admin     = 'admin';
 @error_reporting(E_ALL | E_STRICT); // NOT FOR PRODUCTION SERVERS!
 $CFG->debug = (E_ALL | E_STRICT);   // === DEBUG_DEVELOPER - NOT FOR PRODUCTION SERVERS!
 
-$CFG->noemailever = true;
+$mailhost = getenv('MOODLE_MAIL_HOST');
+if (!empty($mailhost)) {
+    $CFG->smtphosts = $mailhost . ':1025';
+} else {
+    $CFG->noemailever = true;
+}
 
 $CFG->directorypermissions = 0777;
 

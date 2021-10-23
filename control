@@ -1,28 +1,168 @@
 #! /bin/bash
 
-## Change to directory of where this script is located
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "$DIR" || exit;
+projecsdir=$PROJECTS_DIR
+
+ok="$(tput setaf 2)OK:$(tput sgr0)"
+error="$(tput setaf 1)ERROR:$(tput sgr0)"
 
 case "$1" in
     web)
-        webcont="$(docker-compose ps -q moodle)"
+        webcont="$(docker ps -q -f name=$2_moodle)"
         docker exec -ti $webcont bash
         ;;
 
     db)
-        dbcont="$(docker-compose ps -q db)"
+        dbcont="$(docker ps -q -f name=$2_db)"
         docker exec -ti $dbcont psql -U moodle_user moodle
         ;;
 
     testdb)
-        dbtestcont="$(docker-compose ps -q test-db)"
+        dbtestcont="$(docker ps -q -f name=$2_test-db)"
         docker exec -ti $dbtestcont psql -U moodle_user moodle
         ;;
 
     dbrestore)
-        dbcont="$(docker-compose ps -q db)"
-        gunzip < $2 | docker exec -i $dbcont psql -U moodle_user postgres
+        dbcont="$(docker ps -q -f name=$2_db)"
+        gunzip < $3 | docker exec -i $dbcont psql -U moodle_user moodle
+        ;;
+
+    dbbackup)
+        backupfile=$projecsdir/$2-moodle.sql.gz
+        dbcont="$(docker ps -q -f name=$2_db)"
+        docker exec -i $dbcont pg_dump  -U moodle_user moodle |  gzip > $backupfile
+        echo Backup file is avaliable here $backupfile
+        ;;
+
+    start)
+        export COMPOSE_PROJECT_NAME=$2
+        export MOODLE_WWWROOT=$projecsdir/$2
+        export MOODLE_NAME=$2
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
+        export MOODLE_PORT=$siteport
+
+        cd $projecsdir/docker_moodle
+
+        docker-compose up
+        ;;
+
+    stop)
+        export COMPOSE_PROJECT_NAME=$2
+        export MOODLE_WWWROOT=$projecsdir/$2
+        export MOODLE_NAME=$2
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
+        export MOODLE_PORT=$siteport
+
+        cd $projecsdir/docker_moodle
+
+        docker-compose stop
+        ;;
+
+    create)
+        if [ "$(whoami)" != 'root' ]; then
+            echo $error You have no permission to run $0 as non-root user. Use sudo!
+            exit 1;
+        fi
+
+        sitehost=$2.docker
+        siteport="$(shuf -i 500-1000 -n 1)"
+
+        export COMPOSE_PROJECT_NAME=$2
+        export MOODLE_WWWROOT=$projecsdir/$2
+        export MOODLE_NAME=$2
+        export MOODLE_PORT=$siteport
+
+        cd $projecsdir/docker_moodle
+
+        # Backing up exiting config.php
+        cp $MOODLE_WWWROOT/config.php $MOODLE_WWWROOT/config.php-backup
+        echo $ok Backed up existing config.php "($MOODLE_WWWROOT/config.php-backup)"
+
+        # Creating a new config.ph from the template.
+        cp moodle-config $MOODLE_WWWROOT/config.php
+        echo $ok Created config.php "($MOODLE_WWWROOT/config.php)"
+
+        # Saving the project port.
+        echo $siteport > $MOODLE_WWWROOT/siteport~
+        echo $ok Saved the project port "($MOODLE_WWWROOT/siteport~)"
+
+        # Creating a local nginx rule.
+        if ! echo "
+                server {
+                  listen        80;
+                  server_name   $sitehost;
+
+                  location / {
+                    proxy_pass  http://localhost:$siteport;
+                  }
+                }
+          " > /etc/nginx/sites-available/$sitehost
+        then
+            echo $error There is an ERROR creating $sitehost file
+            exit;
+        else
+            echo $ok New nginx site created "(/etc/nginx/sites-available/$sitehost)"
+        fi
+
+        # Enabling a local nginx site.
+        if ! ln -s /etc/nginx/sites-available/$sitehost /etc/nginx/sites-enabled/$sitehost
+        then
+            echo $error There is an ERROR creating $sitehost symlink
+            exit;
+        else
+            echo $ok New nginx site enabled "(/etc/nginx/sites-enabled/$sitehost)"
+        fi
+
+        # Add a new host to /etc/hosts.
+        if ! echo "127.0.0.1    $sitehost" >> /etc/hosts
+        then
+              echo $error ERROR: Not able to write in /etc/hosts
+              exit;
+        else
+              echo $ok New host name added to /etc/hosts file "($sitehost)"
+        fi
+
+        service nginx restart
+        echo $ok Local Nginx restarted
+        echo $ok Start your project using $0 start $2.
+        echo $ok To access the project, navigate to http://$sitehost in your browser.
+        ;;
+
+    delete)
+        if [ "$(whoami)" != 'root' ]; then
+            echo You have no permission to run $0 as non-root user. Use sudo!
+            exit 1;
+        fi
+
+        export COMPOSE_PROJECT_NAME=$2
+        export MOODLE_WWWROOT=$projecsdir/$2
+        export MOODLE_NAME=$2
+
+        sitehost=$2.docker
+        siteport="$(cat $MOODLE_WWWROOT/siteport~)"
+
+        export MOODLE_PORT=$siteport
+
+        rm -rf /etc/nginx/sites-available/$sitehost
+        echo "$ok Deleted nginx site enabled (/etc/nginx/sites-enabled/$sitehost)"
+
+        rm -rf /etc/nginx/sites-enabled/$sitehost
+        echo $ok New nginx site enabled "(/etc/nginx/sites-enabled/$sitehost)"
+
+        rm $MOODLE_WWWROOT/siteport~
+        echo $ok New nginx site enabled "(/etc/nginx/sites-enabled/$sitehost)"
+
+        service nginx restart
+
+        sed -i "/$sitehost/d" /etc/hosts
+        echo $ok Deleted host name from /etc/hosts file "($sitehost)"
+
+        cd "$projecsdir/docker_moodle"
+
+        echo $ok Removing docker components...
+
+        docker-compose down
+        docker image rm $2_moodle
+        echo $ok Project deleted
         ;;
 
     *)
