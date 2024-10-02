@@ -1,4 +1,3 @@
-version: '3'
 
 services:
   moodle:
@@ -8,7 +7,7 @@ services:
     volumes:
       - ./siteroot:/siteroot
   db:
-    image: postgres:10.15
+    image: postgres:14
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: moodle
@@ -16,7 +15,7 @@ services:
     volumes:
       - 'db:/var/lib/postgresql'
   test-db:
-    image: postgres:10.15
+    image: postgres:14
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: moodle
